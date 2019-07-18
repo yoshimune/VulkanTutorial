@@ -24,6 +24,7 @@ private:
 	void initWindow();
 
 	void initVulkan();
+	void createInstance();
 
 	void mainLoop();
 
@@ -31,6 +32,6 @@ private:
 
 	GLFWwindow* window;
 
-
+	VkInstance instance;
 };
 
