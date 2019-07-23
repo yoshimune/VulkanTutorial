@@ -8,6 +8,7 @@
 #include <functional>
 #include <vector>
 #include <cstring>
+#include <optional>
 
 class HelloTriangleApplication {
 public:
@@ -33,6 +34,14 @@ public:
 	}
 
 private:
+	struct QueueFamilyIndices {
+		std::optional<uint32_t> graphicsFamily;
+
+		bool isComplete() {
+			return graphicsFamily.has_value();
+		}
+	};
+
 	void initWindow();
 
 	void initVulkan();
@@ -45,6 +54,13 @@ private:
 	GLFWwindow* window;
 
 	VkInstance instance;
+	VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+
+	
+	void pickPhysicalDevice();
+	bool isDeviceSuitable(VkPhysicalDevice device);
+	QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+
 	VkDebugUtilsMessengerEXT debugMessenger;
 
 	bool checkValidationLayerSupport();
