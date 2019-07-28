@@ -9,6 +9,8 @@
 #include <vector>
 #include <cstring>
 #include <optional>
+#include <set>
+#include <algorithm>
 
 class HelloTriangleApplication {
 public:
@@ -18,6 +20,10 @@ public:
 	const std::vector<const char*> validationLayers = {
 		// SDK内にある一般的なvalidation layer
 		"VK_LAYER_KHRONOS_validation"
+	};
+
+	const std::vector<const char*> deviceExtensions = {
+		VK_KHR_SWAPCHAIN_EXTENSION_NAME
 	};
 
 #ifdef NDEBUG
@@ -36,33 +42,67 @@ public:
 private:
 	struct QueueFamilyIndices {
 		std::optional<uint32_t> graphicsFamily;
+		std::optional<uint32_t> presentFamily;
 
 		bool isComplete() {
-			return graphicsFamily.has_value();
+			return graphicsFamily.has_value()
+				&& presentFamily.has_value();
 		}
+	};
+
+	// スワップチェーン作成に必要な情報
+	struct SwapChainSupportDetails {
+		VkSurfaceCapabilitiesKHR capabilities;		// 基本的なサーフェイス機能
+		std::vector<VkSurfaceFormatKHR> formats;	// カラーフォーマット、カラースペース
+		std::vector<VkPresentModeKHR> presentModes;	// 表示（Vsyncなど）モード
 	};
 
 	void initWindow();
 
 	void initVulkan();
 	void createInstance();
-
+	void createSurface();
 	void mainLoop();
 
 	void cleanup();
 
 	GLFWwindow* window;
 
+	VkSurfaceKHR surface;
+
 	VkInstance instance;
 	VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 	VkDevice device;
 	VkQueue graphicsQueue;
+	VkQueue presentQueue;
+	VkSwapchainKHR swapChain;
+	std::vector<VkImage> swapChainImages;
+	std::vector<VkImageView> swapChainImageViews;
+	VkFormat swapChainImageFormat;
+	VkExtent2D swapChainExtent;
 
 	void pickPhysicalDevice();
 	bool isDeviceSuitable(VkPhysicalDevice device);
+	bool checkDeviceExtensionSupport(VkPhysicalDevice device);
 	QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 
 	void createLogicalDevice();
+	SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+
+	// カラーフォーマット・カラースペースを選択する
+	VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
+	
+	// ディスプレイとの同期方法を選択する
+	VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
+
+	// スワップチェーンの解像度を決定する
+	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
+
+	// スワップチェーン作成
+	void createSwapChain();
+
+	// イメージビュー作成
+	void createImageViews();
 
 	VkDebugUtilsMessengerEXT debugMessenger;
 
