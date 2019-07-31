@@ -104,6 +104,9 @@ private:
 	// イメージビュー作成
 	void createImageViews();
 
+	// グラフィックスパイプライン作成
+	void createGraphicsPipeline();
+
 	VkDebugUtilsMessengerEXT debugMessenger;
 
 	bool checkValidationLayerSupport();
