@@ -24,6 +24,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="shaders\shader.frag">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="shaders\shader.vert">
+      <Filter>リソース ファイル</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelloTriangleApp.h">

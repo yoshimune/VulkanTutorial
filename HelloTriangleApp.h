@@ -11,6 +11,7 @@
 #include <optional>
 #include <set>
 #include <algorithm>
+#include <fstream>
 
 class HelloTriangleApplication {
 public:
@@ -107,6 +108,9 @@ private:
 	// グラフィックスパイプライン作成
 	void createGraphicsPipeline();
 
+	// シェーダーモジュール作成
+	VkShaderModule createShaderModule(const std::vector<char>& code);
+
 	VkDebugUtilsMessengerEXT debugMessenger;
 
 	bool checkValidationLayerSupport();
@@ -134,5 +138,7 @@ private:
 		VkDebugUtilsMessageTypeFlagsEXT messageType,
 		const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
 		void* pUserData);
+
+	static std::vector<char> readFile(const std::string& filename);
 };
 
