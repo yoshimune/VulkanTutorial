@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
@@ -7,11 +7,13 @@
 #include <stdexcept>
 #include <functional>
 #include <vector>
+#include <array>
 #include <cstring>
 #include <optional>
 #include <set>
 #include <algorithm>
 #include <fstream>
+
 
 class HelloTriangleApplication {
 public:
@@ -19,7 +21,7 @@ public:
 	const int HEIGHT = 600;
 
 	const std::vector<const char*> validationLayers = {
-		// SDK“à‚É‚ ‚éˆê”Ê“I‚Èvalidation layer
+		// SDKå†…ã«ã‚ã‚‹ä¸€èˆ¬çš„ãªvalidation layer
 		"VK_LAYER_KHRONOS_validation"
 	};
 
@@ -51,11 +53,11 @@ private:
 		}
 	};
 
-	// ƒXƒƒbƒvƒ`ƒF[ƒ“ì¬‚É•K—v‚Èî•ñ
+	// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ä½œæˆã«å¿…è¦ãªæƒ…å ±
 	struct SwapChainSupportDetails {
-		VkSurfaceCapabilitiesKHR capabilities;		// Šî–{“I‚ÈƒT[ƒtƒFƒCƒX‹@”\
-		std::vector<VkSurfaceFormatKHR> formats;	// ƒJƒ‰[ƒtƒH[ƒ}ƒbƒgAƒJƒ‰[ƒXƒy[ƒX
-		std::vector<VkPresentModeKHR> presentModes;	// •\¦iVsync‚È‚Çjƒ‚[ƒh
+		VkSurfaceCapabilitiesKHR capabilities;		// åŸºæœ¬çš„ãªã‚µãƒ¼ãƒ•ã‚§ã‚¤ã‚¹æ©Ÿèƒ½
+		std::vector<VkSurfaceFormatKHR> formats;	// ã‚«ãƒ©ãƒ¼ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã€ã‚«ãƒ©ãƒ¼ã‚¹ãƒšãƒ¼ã‚¹
+		std::vector<VkPresentModeKHR> presentModes;	// è¡¨ç¤ºï¼ˆVsyncãªã©ï¼‰ãƒ¢ãƒ¼ãƒ‰
 	};
 
 	void initWindow();
@@ -81,6 +83,7 @@ private:
 	std::vector<VkImageView> swapChainImageViews;
 	VkFormat swapChainImageFormat;
 	VkExtent2D swapChainExtent;
+	VkRenderPass renderPass;
 	VkPipelineLayout pipelineLayout;
 
 	void pickPhysicalDevice();
@@ -91,25 +94,28 @@ private:
 	void createLogicalDevice();
 	SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
 
-	// ƒJƒ‰[ƒtƒH[ƒ}ƒbƒgEƒJƒ‰[ƒXƒy[ƒX‚ğ‘I‘ğ‚·‚é
+	// ã‚«ãƒ©ãƒ¼ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒ»ã‚«ãƒ©ãƒ¼ã‚¹ãƒšãƒ¼ã‚¹ã‚’é¸æŠã™ã‚‹
 	VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
 	
-	// ƒfƒBƒXƒvƒŒƒC‚Æ‚Ì“¯Šú•û–@‚ğ‘I‘ğ‚·‚é
+	// ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ã¨ã®åŒæœŸæ–¹æ³•ã‚’é¸æŠã™ã‚‹
 	VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
 
-	// ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì‰ğ‘œ“x‚ğŒˆ’è‚·‚é
+	// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ã®è§£åƒåº¦ã‚’æ±ºå®šã™ã‚‹
 	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 
-	// ƒXƒƒbƒvƒ`ƒF[ƒ“ì¬
+	// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ä½œæˆ
 	void createSwapChain();
 
-	// ƒCƒ[ƒWƒrƒ…[ì¬
+	// ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ“ãƒ¥ãƒ¼ä½œæˆ
 	void createImageViews();
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“ì¬
+	// Render pass ä½œæˆ
+	void createRenderPass();
+
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ä½œæˆ
 	void createGraphicsPipeline();
 
-	// ƒVƒF[ƒ_[ƒ‚ƒWƒ…[ƒ‹ì¬
+	// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ä½œæˆ
 	VkShaderModule createShaderModule(const std::vector<char>& code);
 
 	VkDebugUtilsMessengerEXT debugMessenger;
@@ -141,5 +147,6 @@ private:
 		void* pUserData);
 
 	static std::vector<char> readFile(const std::string& filename);
+	VkPipeline graphicsPipeline;
 };
 
