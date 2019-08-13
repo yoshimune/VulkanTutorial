@@ -85,6 +85,7 @@ private:
 	VkExtent2D swapChainExtent;
 	VkRenderPass renderPass;
 	VkPipelineLayout pipelineLayout;
+	std::vector<VkFramebuffer> swapChainFramebuffers;
 
 	void pickPhysicalDevice();
 	bool isDeviceSuitable(VkPhysicalDevice device);
@@ -117,6 +118,9 @@ private:
 
 	// シェーダーモジュール作成
 	VkShaderModule createShaderModule(const std::vector<char>& code);
+
+	// フレームバッファ作成
+	void createFramebuffers();
 
 	VkDebugUtilsMessengerEXT debugMessenger;
 
