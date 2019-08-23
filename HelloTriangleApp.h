@@ -86,6 +86,8 @@ private:
 	VkRenderPass renderPass;
 	VkPipelineLayout pipelineLayout;
 	std::vector<VkFramebuffer> swapChainFramebuffers;
+	VkCommandPool commandPool;
+	std::vector<VkCommandBuffer> commandBuffers;
 
 	void pickPhysicalDevice();
 	bool isDeviceSuitable(VkPhysicalDevice device);
@@ -121,6 +123,12 @@ private:
 
 	// フレームバッファ作成
 	void createFramebuffers();
+
+	// コマンドプール作成
+	void createCommandPool();
+
+	// コマンドバッファ作成
+	void createCommandBuffers();
 
 	VkDebugUtilsMessengerEXT debugMessenger;
 
