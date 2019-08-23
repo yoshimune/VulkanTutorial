@@ -66,6 +66,7 @@ private:
 	void createInstance();
 	void createSurface();
 	void mainLoop();
+	void drawFrame();
 
 	void cleanup();
 

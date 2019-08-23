@@ -767,7 +767,13 @@ void HelloTriangleApplication::mainLoop()
 {
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
+		drawFrame();
 	}
+}
+
+void HelloTriangleApplication::drawFrame()
+{
+
 }
 
 void HelloTriangleApplication::cleanup()
