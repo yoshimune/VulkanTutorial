@@ -43,6 +43,9 @@ public:
 	}
 
 private:
+	const int MAX_FRAMES_IN_FLIGHT = 2;
+	size_t currentFrame = 0;
+
 	struct QueueFamilyIndices {
 		std::optional<uint32_t> graphicsFamily;
 		std::optional<uint32_t> presentFamily;
@@ -89,6 +92,9 @@ private:
 	std::vector<VkFramebuffer> swapChainFramebuffers;
 	VkCommandPool commandPool;
 	std::vector<VkCommandBuffer> commandBuffers;
+	std::vector<VkSemaphore> imageAvailableSemaphores;
+	std::vector<VkSemaphore> renderFinishedSemaphores;
+	std::vector<VkFence> inFlightFences;
 
 	void pickPhysicalDevice();
 	bool isDeviceSuitable(VkPhysicalDevice device);
@@ -130,6 +136,9 @@ private:
 
 	// コマンドバッファ作成
 	void createCommandBuffers();
+
+	// 同期オブジェクト作成
+	void createSyncObjects();
 
 	VkDebugUtilsMessengerEXT debugMessenger;
 
