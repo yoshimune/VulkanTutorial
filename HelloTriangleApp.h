@@ -72,6 +72,7 @@ private:
 	void drawFrame();
 
 	void cleanup();
+	void cleanupSwapChain();
 
 	GLFWwindow* window;
 
@@ -95,6 +96,7 @@ private:
 	std::vector<VkSemaphore> imageAvailableSemaphores;
 	std::vector<VkSemaphore> renderFinishedSemaphores;
 	std::vector<VkFence> inFlightFences;
+	bool framebufferResized = false;
 
 	void pickPhysicalDevice();
 	bool isDeviceSuitable(VkPhysicalDevice device);
@@ -115,6 +117,9 @@ private:
 
 	// スワップチェーン作成
 	void createSwapChain();
+
+	// スワップチェーン再生成
+	void recreateSwapChain();
 
 	// イメージビュー作成
 	void createImageViews();
@@ -170,5 +175,7 @@ private:
 
 	static std::vector<char> readFile(const std::string& filename);
 	VkPipeline graphicsPipeline;
+
+	static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
 };
 
