@@ -75,10 +75,13 @@ private:
 	};
 
 	const std::vector<Vertex> vertices = {
-		{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+		{{0.0f, -0.5f}, {1.0f, 1.0f, 1.0f}},
 		{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
 		{{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}
 	};
+
+	VkBuffer vertexBuffer;
+	VkDeviceMemory vertexBufferMemory;
 
 	const int MAX_FRAMES_IN_FLIGHT = 2;
 	size_t currentFrame = 0;
@@ -178,6 +181,12 @@ private:
 
 	// コマンドバッファ作成
 	void createCommandBuffers();
+
+	// 頂点バッファ作成
+	void createVertexBuffer();
+
+	// メモリタイプを見つける
+	uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
 	// 同期オブジェクト作成
 	void createSyncObjects();
