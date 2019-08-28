@@ -182,8 +182,19 @@ private:
 	// コマンドバッファ作成
 	void createCommandBuffers();
 
+	// バッファ作成
+	void createBuffer(
+		VkDeviceSize size,
+		VkBufferUsageFlags usage,
+		VkMemoryPropertyFlags properties,
+		VkBuffer& buffer,
+		VkDeviceMemory& bufferMemory);
+
 	// 頂点バッファ作成
 	void createVertexBuffer();
+
+	// バッファコピー
+	void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
 	// メモリタイプを見つける
 	uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
