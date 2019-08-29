@@ -75,13 +75,20 @@ private:
 	};
 
 	const std::vector<Vertex> vertices = {
-		{{0.0f, -0.5f}, {1.0f, 1.0f, 1.0f}},
-		{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-		{{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}
+		{{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+		{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
+		{{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
+		{{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}}
+	};
+
+	const std::vector<uint16_t> indices = {
+		0, 1, 2, 2, 3, 0
 	};
 
 	VkBuffer vertexBuffer;
 	VkDeviceMemory vertexBufferMemory;
+	VkBuffer indexBuffer;
+	VkDeviceMemory indexBufferMemory;
 
 	const int MAX_FRAMES_IN_FLIGHT = 2;
 	size_t currentFrame = 0;
@@ -192,6 +199,9 @@ private:
 
 	// 頂点バッファ作成
 	void createVertexBuffer();
+
+	// インデックスバッファ作成
+	void createIndexBuffer();
 
 	// バッファコピー
 	void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
