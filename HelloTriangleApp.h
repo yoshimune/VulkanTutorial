@@ -14,7 +14,13 @@
 #include <algorithm>
 #include <fstream>
 
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEFAULT_ALIGNED_GENTYPES
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include <chrono>
+
 
 
 class HelloTriangleApplication {
@@ -85,10 +91,21 @@ private:
 		0, 1, 2, 2, 3, 0
 	};
 
+	struct UniformBufferObject {
+		alignas(16) glm::mat4 model;
+		alignas(16) glm::mat4 view;
+		alignas(16) glm::mat4 proj;
+	};
+
 	VkBuffer vertexBuffer;
 	VkDeviceMemory vertexBufferMemory;
 	VkBuffer indexBuffer;
 	VkDeviceMemory indexBufferMemory;
+
+	std::vector<VkBuffer> uniformBuffers;
+	std::vector<VkDeviceMemory> uniformBuffersMemory;
+	VkDescriptorPool descriptorPool;
+	std::vector<VkDescriptorSet> descriptorSets;
 
 	const int MAX_FRAMES_IN_FLIGHT = 2;
 	size_t currentFrame = 0;
@@ -136,6 +153,7 @@ private:
 	VkFormat swapChainImageFormat;
 	VkExtent2D swapChainExtent;
 	VkRenderPass renderPass;
+	VkDescriptorSetLayout descriptorSetLayout;
 	VkPipelineLayout pipelineLayout;
 	std::vector<VkFramebuffer> swapChainFramebuffers;
 	VkCommandPool commandPool;
@@ -211,6 +229,21 @@ private:
 
 	// 同期オブジェクト作成
 	void createSyncObjects();
+
+	// ディスクリプタセットレイアウト作成
+	void createDescriptorSetLayout();
+
+	// ユニフォームバッファ作成
+	void createUniformBuffers();
+
+	// ユニフォームバッファ更新
+	void updateUniformBuffer(uint32_t currentImage);
+
+	// ディスクリプタプール作成
+	void createDescriptorPool();
+
+	// ディスクリプタセット作成
+	void createDescriptorSets();
 
 	VkDebugUtilsMessengerEXT debugMessenger;
 
