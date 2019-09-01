@@ -1216,11 +1216,6 @@ void HelloTriangleApplication::cleanupSwapChain()
 		vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
 	}
 
-	for (size_t i = 0; i < swapChainImages.size(); i++) {
-		vkDestroyBuffer(device, uniformBuffers[i], nullptr);
-		vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
-	}
-
 	vkDestroyDescriptorPool(device, descriptorPool, nullptr);
 }
 
