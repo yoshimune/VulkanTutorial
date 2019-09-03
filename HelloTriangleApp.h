@@ -107,6 +107,9 @@ private:
 	VkImage textureImage;
 	VkDeviceMemory textureImageMemory;
 
+	VkImageView textureImageView;
+	VkSampler textureSampler;
+
 	std::vector<VkBuffer> uniformBuffers;
 	std::vector<VkDeviceMemory> uniformBuffersMemory;
 	VkDescriptorPool descriptorPool;
@@ -252,6 +255,9 @@ private:
 		VkImage& image,
 		VkDeviceMemory& imageMemory);
 
+	// イメージビュー作成
+	VkImageView createImageView(VkImage image, VkFormat format);
+
 	// イメージレイアウト遷移
 	void transitionImageLayout(
 		VkImage image,
@@ -265,6 +271,12 @@ private:
 		VkImage image,
 		uint32_t width,
 		uint32_t height);
+
+	// テクスチャのイメージビュー作成
+	void createTextureImageView();
+
+	// イメージサンプラを作成する
+	void createTextureSampler();
 
 	// 同期オブジェクト作成
 	void createSyncObjects();
