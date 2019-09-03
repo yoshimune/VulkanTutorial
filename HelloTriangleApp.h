@@ -23,6 +23,8 @@
 
 
 
+
+
 class HelloTriangleApplication {
 public:
 	const int WIDTH = 800;
@@ -101,6 +103,9 @@ private:
 	VkDeviceMemory vertexBufferMemory;
 	VkBuffer indexBuffer;
 	VkDeviceMemory indexBufferMemory;
+
+	VkImage textureImage;
+	VkDeviceMemory textureImageMemory;
 
 	std::vector<VkBuffer> uniformBuffers;
 	std::vector<VkDeviceMemory> uniformBuffersMemory;
@@ -207,6 +212,12 @@ private:
 	// コマンドバッファ作成
 	void createCommandBuffers();
 
+	// コマンドバッファの作成とレコード開始を行う
+	VkCommandBuffer beginSingleTimeCommands();
+
+	// コマンドバッファのレコード完了・サブミット・解放
+	void endSingleTimeCommands(VkCommandBuffer commandBuffer);
+
 	// バッファ作成
 	void createBuffer(
 		VkDeviceSize size,
@@ -226,6 +237,34 @@ private:
 
 	// メモリタイプを見つける
 	uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
+
+	// テクスチャイメージ作成
+	void createTextureImage();
+
+	// イメージ作成
+	void createImage(
+		uint32_t width,
+		uint32_t height,
+		VkFormat format,
+		VkImageTiling tiling,
+		VkImageUsageFlags usage,
+		VkMemoryPropertyFlags properties,
+		VkImage& image,
+		VkDeviceMemory& imageMemory);
+
+	// イメージレイアウト遷移
+	void transitionImageLayout(
+		VkImage image,
+		VkFormat format,
+		VkImageLayout oldLayout,
+		VkImageLayout newLayout);
+
+	// バッファをイメージにコピーする
+	void copyBufferToImage(
+		VkBuffer buffer,
+		VkImage image,
+		uint32_t width,
+		uint32_t height);
 
 	// 同期オブジェクト作成
 	void createSyncObjects();
