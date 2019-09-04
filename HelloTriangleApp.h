@@ -272,7 +272,7 @@ private:
 		VkDeviceMemory& imageMemory);
 
 	// イメージビュー作成
-	VkImageView createImageView(VkImage image, VkFormat format);
+	VkImageView createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
 
 	// イメージレイアウト遷移
 	void transitionImageLayout(

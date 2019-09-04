@@ -467,7 +467,7 @@ void HelloTriangleApplication::createImageViews()
 	swapChainImageViews.resize(swapChainImages.size());
 
 	for (size_t i = 0; i < swapChainImages.size(); i++) {
-		swapChainImageViews[i] = createImageView(swapChainImages[i], swapChainImageFormat);
+		swapChainImageViews[i] = createImageView(swapChainImages[i], swapChainImageFormat, VK_IMAGE_ASPECT_COLOR_BIT);
 	}
 }
 
@@ -1085,14 +1085,14 @@ void HelloTriangleApplication::createImage(
 }
 
 // イメージビュー作成
-VkImageView HelloTriangleApplication::createImageView(VkImage image, VkFormat format)
+VkImageView HelloTriangleApplication::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags)
 {
 	VkImageViewCreateInfo viewInfo = {};
 	viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 	viewInfo.image = image;
 	viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
 	viewInfo.format = format;
-	viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	viewInfo.subresourceRange.aspectMask = aspectFlags;
 	viewInfo.subresourceRange.baseMipLevel = 0;
 	viewInfo.subresourceRange.levelCount = 1;
 	viewInfo.subresourceRange.baseArrayLayer = 0;
@@ -1205,7 +1205,7 @@ void HelloTriangleApplication::copyBufferToImage(
 
 // テクスチャのイメージビュー作成
 void HelloTriangleApplication::createTextureImageView() {
-	textureImageView = createImageView(textureImage, VK_FORMAT_R8G8B8A8_UNORM);
+	textureImageView = createImageView(textureImage, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_ASPECT_COLOR_BIT);
 }
 
 // イメージサンプラを作成する
@@ -1248,7 +1248,7 @@ void HelloTriangleApplication::createDepthResource()
 		depthImage,
 		depthImageMemory);
 
-	depthImageView = createImageView(depthImage, depthFormat);
+	depthImageView = createImageView(depthImage, depthFormat, VK_IMAGE_ASPECT_COLOR_BIT);
 }
 
 // フォーマットを検索する
