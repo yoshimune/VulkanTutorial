@@ -38,9 +38,15 @@
     <ClInclude Include="stb_image.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="tiny_obj_loader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\texture.jpg">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="textures\chalet.jpg">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
