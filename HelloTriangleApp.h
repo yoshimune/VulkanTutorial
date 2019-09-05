@@ -113,7 +113,7 @@ private:
 		alignas(16) glm::mat4 proj;
 	};
 
-
+	uint32_t mipLevels;
 	VkImage textureImage;
 	VkDeviceMemory textureImageMemory;
 
@@ -265,6 +265,7 @@ private:
 	void createImage(
 		uint32_t width,
 		uint32_t height,
+		uint32_t mipLevels,
 		VkFormat format,
 		VkImageTiling tiling,
 		VkImageUsageFlags usage,
@@ -273,14 +274,19 @@ private:
 		VkDeviceMemory& imageMemory);
 
 	// イメージビュー作成
-	VkImageView createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
+	VkImageView createImageView(
+		VkImage image,
+		VkFormat format,
+		VkImageAspectFlags aspectFlags, 
+		uint32_t mipLevels);
 
 	// イメージレイアウト遷移
 	void transitionImageLayout(
 		VkImage image,
 		VkFormat format,
 		VkImageLayout oldLayout,
-		VkImageLayout newLayout);
+		VkImageLayout newLayout,
+		uint32_t mipLevels);
 
 	// バッファをイメージにコピーする
 	void copyBufferToImage(
