@@ -117,12 +117,18 @@ private:
 	VkImage textureImage;
 	VkDeviceMemory textureImageMemory;
 
+	VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT;
+
 	VkImageView textureImageView;
 	VkSampler textureSampler;
 
 	VkImage depthImage;
 	VkDeviceMemory depthImageMemory;
 	VkImageView depthImageView;
+
+	VkImage colorImage;
+	VkDeviceMemory colorImageMemory;
+	VkImageView colorImageView;
 
 	std::vector<VkBuffer> uniformBuffers;
 	std::vector<VkDeviceMemory> uniformBuffersMemory;
@@ -266,6 +272,7 @@ private:
 		uint32_t width,
 		uint32_t height,
 		uint32_t mipLevels,
+		VkSampleCountFlagBits numSamples,
 		VkFormat format,
 		VkImageTiling tiling,
 		VkImageUsageFlags usage,
@@ -310,8 +317,14 @@ private:
 		uint32_t mipLevels
 	);
 
+	// MSAAサンプリング数を取得する
+	VkSampleCountFlagBits getMaxUsableSampleCount();
+
 	// デプスリソースを作成する
 	void createDepthResource();
+
+	// カラーリソースを作成する
+	void createColorResources();
 
 	// フォーマットを検索する
 	VkFormat findSupportedFormat(
