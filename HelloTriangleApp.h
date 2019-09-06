@@ -301,6 +301,15 @@ private:
 	// イメージサンプラを作成する
 	void createTextureSampler();
 
+	// ミップマップを生成する
+	void generateMipmaps(
+		VkImage image,
+		VkFormat imageFormat,
+		uint32_t texWidth,
+		uint32_t texHeight,
+		uint32_t mipLevels
+	);
+
 	// デプスリソースを作成する
 	void createDepthResource();
 
